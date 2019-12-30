@@ -7,6 +7,7 @@ import { RegisterComponent } from './components/users/register/register.componen
 import { ProfileComponent } from './components/users/profile/profile.component';
 import { Page404Component } from './components/page404/page404.component';
 import { ListBooksComponent } from './components/admin/list-books/list-books.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 
@@ -14,7 +15,7 @@ const routes: Routes = [   //rutas para direccionar la pagina
   
   { path: '', component: HomeComponent }, //  ver privilegios de usuarios
   { path: 'offers', component: OffersComponent},
-  { path: 'admin/list-books', component: ListBooksComponent},
+  { path: 'admin/list-books', component: ListBooksComponent, canActivate: [AuthGuard]},
   { path: 'user/login', component: LoginComponent},
   { path: 'user/register', component: RegisterComponent},
   { path: 'user/profile', component: ProfileComponent},

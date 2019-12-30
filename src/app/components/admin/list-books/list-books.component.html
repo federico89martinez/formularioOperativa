@@ -4,5 +4,35 @@
 
 <h2>FORMULARIO MILITAR</h2>
 
-<h2>FORMULARIO MILITAR</h2>
+
+
+
+ ADMIN: {{isAdmin}} <!--comprobamos si es admin o no-->  
+
+
+
+
+<!-- ACA DEBEMOS REVISAR EL FORMULARIO DEPENDIENDO SI ES ADMIN O MILITAR -->
+
+ <td *ngIf="isAdmin == true; else noAdmin">
+    <button class="btn btn-danger">Verificar</button>
+    <!-- <button type="button" class="btn btn-primary" disabled="true">Enviar</button> -->
+
+</td>
+<ng-template #noAdmin>
+    
+        
+        <label for="nombre" class="col-form-label">Nombre</label>
+        <input type="text" name="nameMilitar">
+        <label for="nombre" class="col-form-label">Apellido</label>
+        <input type="text" name="nameMilitar">
+        <br>
+        <label for="nombre" class="col-form-label">Nombre</label>
+        <input type="text" name="nameMilitar">
+        <br/>
+        <br> 
+        <button type="button" class="btn btn-primary ">Enviar</button>
+        <br/>
+    
+</ng-template> 
 

@@ -18,6 +18,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuth} from '@angular/fire/auth';
 import { ListBooksComponent } from './components/admin/list-books/list-books.component';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 
@@ -43,7 +44,7 @@ import { ListBooksComponent } from './components/admin/list-books/list-books.com
     AngularFireDatabaseModule
 
   ],
-  providers: [AngularFireAuth], 
+  providers: [AngularFireAuth, AngularFirestore], 
   bootstrap: [AppComponent]
 })
 
