@@ -6,20 +6,20 @@
     </button>
   
     <div class="collapse navbar-collapse" id="mainNavbar">
-      <ul class="navbar-nav mr-auto">
+      <!-- <ul class="navbar-nav mr-auto">
         <li class="nav-item" *ngIf="isLogged">
           <a class="nav-link" routerLink="/offers">Verificar
           </a>
         </li>
-        LOGGED: {{isLogged}}
-      </ul>
+        LOGGED: {{isLogged}} 
+      </ul> -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item" *ngIf="!isLogged">
-          <a class="nav-link" routerLink="/user/register">Register
+          <a class="nav-link" routerLink="/user/register">Registrarse
           </a>
         </li>
         <li class="nav-item" *ngIf="isLogged">
-          <a class="nav-link" routerLink="/user/profile">Profile</a>
+          <a class="nav-link" routerLink="/user/profile">Perfil</a>
         </li>
         <li class="nav-item" *ngIf="isLogged">
           <a class="nav-link" routerLink="/admin/list-books">Formulario</a>
@@ -35,3 +35,5 @@
       </ul>
     </div>
   </nav>
+
+  

@@ -19,6 +19,9 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuth} from '@angular/fire/auth';
 import { ListBooksComponent } from './components/admin/list-books/list-books.component';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DataApiService } from './services/data-api.service';
 
 
 
@@ -41,10 +44,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFirestoreModule,
+    ReactiveFormsModule
 
   ],
-  providers: [AngularFireAuth, AngularFirestore], 
+  providers: [AngularFireAuth, AngularFirestore,DataApiService], 
   bootstrap: [AppComponent]
 })
 

@@ -7,7 +7,7 @@
 
 
 
- ADMIN: {{isAdmin}} <!--comprobamos si es admin o no-->  
+ <!-- ADMIN: {{isAdmin}} comprobamos si es admin o no   -->
 
 
 
@@ -15,24 +15,118 @@
 <!-- ACA DEBEMOS REVISAR EL FORMULARIO DEPENDIENDO SI ES ADMIN O MILITAR -->
 
  <td *ngIf="isAdmin == true; else noAdmin">
-    <button class="btn btn-danger">Verificar</button>
+    <h1>-</h1>
+    
+    <div *ngIf="contacts ?. length > 0;else noContacts">
+            <ul *ngFor="let contact of contacts" class="collection">
+                    <li class="collection-item">
+                        <a  class="secondary-content">  <!-- href="" -->
+                                <i *ngIf="editState == false" (click)="editForm($event,contact)" class ="material-icons">mode_edit</i>
+                                <i *ngIf="editState && formToEdit.id == contact.id" (click)="clearState()" class="material-icons">close</i>
+                        </a>                                
+                           <strong>Formulario</strong>
+                           <br>
+                           <blockquote>Descripcion del Formulario</blockquote>
+                           <br>
+
+
+                           <span class="my_tag amber">
+                                <strong>Nombre:</strong>{{ contact.name }}</span>
+                           <span class="my_tag amber">
+                                <strong>Email:</strong>{{ contact.email }}</span>
+
+                           
+                           <span class="my_tag amber">
+                                <strong>Mensaje:</strong>{{ contact.message }}</span>
+                        <hr>
+                        <div *ngIf="editState && formToEdit.id == contact.id" class="container-updateFormulario">
+                              <!-- todo form  -->
+                              <form [formGroup]="contactForm" (ngSubmit)="onUpdateForm(contact)">
+                                <input  [(ngModel)]="contact.name"  type="text" formControlName="name"  id="name" placeholder="name">
+                                <div class="alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
+                                        <div class="container-error-message" *ngIf="name.errors.required">
+                                                El nombre es requerido
+                                        </div>
+                                         <div class="container-error-message" *ngIf="name.errors.minlength">
+                                                El nombre debe tener como minimo 5 caracteres
+                                        </div> 
+                                </div>
+                                <!-- <input [(ngModel)]="contact.email" #email="ngModel" type="text" formControlName="email" id="email" placeholder=" Email"> -->
+                                <input [(ngModel)]="contact.email" type="text" formControlName="email" id="email" name="email" placeholder="email">
+                                <div class="alert-danger" *ngIf="email.invalid && (name.dirty || name.touched)">
+                                        <div class="container-error-message" *ngIf="email.errors.required">
+                                                El email es requerido
+                                        </div>
+                                        <div class="container-error-message" *ngIf="(email.dirty || email.touched) &&
+                                        email.invalid && email.errors.pattern">
+                                                El email debe ser valido
+                                        </div> 
+                                </div>
+                                <textarea formControlName="message" placeholder="Deje un comentario si lo desea"></textarea>
+
+                                <button (click)="deleteForm($event, contact)" class="btn red right">Borrar
+                                      <i class="material-icons right">delete_forever</i>  
+                                </button>
+                                <button type="submit" class="btn orange">Actualizar
+                                        <i class="material-icons right">save</i>
+                                </button>
+                                
+                                
+                        </form>
+                        </div>
+                    </li>
+
+            </ul>
+    </div>
+    <ng-template #noContacts>
+         <hr>
+         <h5>No existen Formularios</h5>   
+    </ng-template>
     <!-- <button type="button" class="btn btn-primary" disabled="true">Enviar</button> -->
 
 </td>
 <ng-template #noAdmin>
     
+        <div class="form-container">
+                <h1>Complete su Formulario</h1>
+                
+                <form [formGroup]="contactForm" (ngSubmit)="onSaveForm(formNew)" #formNew="ngForm">
+                        <input  [(ngModel)]="contact.nombre"   type="text" formControlName="name" name = "name" id="name" placeholder="name">
+                        <div class="alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
+                                <div class="container-error-message" *ngIf="name.errors.required">
+                                        El nombre es requerido
+                                </div>
+                                 <div class="container-error-message" *ngIf="name.errors.minlength">
+                                        El nombre debe tener como minimo 5 caracteres
+                                </div> 
+                        </div>
+                        <!-- <input [(ngModel)]="contact.email" #email="ngModel" type="text" formControlName="email" id="email" placeholder=" Email"> -->
+                        <input [(ngModel)]="contact.email" type="text" formControlName="email" id="email" name="email" placeholder="email">
+                        <div class="alert-danger" *ngIf="email.invalid && (name.dirty || name.touched)">
+                                <div class="container-error-message" *ngIf="email.errors.required">
+                                        El email es requerido
+                                </div>
+                                <div class="container-error-message" *ngIf="(email.dirty || email.touched) &&
+                                email.invalid && email.errors.pattern">
+                                        El email debe ser valido
+                                </div> 
+                        </div>
+                        <textarea formControlName="message" placeholder="Deje un comentario si lo desea"></textarea>
+                        <!-- <div class="alert-danger" *ngIf="message.invalid && (message.dirty || message.touched)">
+                                <div class="container-error-message" *ngIf="message.errors.required">
+                                        El mensaje es requerido
+                                </div>
+                                <div class="container-error-message" *ngIf="message.errors.minlength">
+                                        El mensaje debe contener al menos 10 caracteres
+                                </div> 
+                        </div> -->
+                        <button type="submit" class="btn-send" (click)="enviarFormulario()" [disabled]="!contactForm.valid"> Enviar </button>
+                       
+                </form>
+
+        </div>
         
-        <label for="nombre" class="col-form-label">Nombre</label>
-        <input type="text" name="nameMilitar">
-        <label for="nombre" class="col-form-label">Apellido</label>
-        <input type="text" name="nameMilitar">
-        <br>
-        <label for="nombre" class="col-form-label">Nombre</label>
-        <input type="text" name="nameMilitar">
-        <br/>
-        <br> 
-        <button type="button" class="btn btn-primary ">Enviar</button>
-        <br/>
+       
     
 </ng-template> 
 
