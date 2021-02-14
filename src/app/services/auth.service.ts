@@ -48,7 +48,7 @@ export class AuthService {
         editor: true
       }
     }
-    return userRef.set(data, { merge: true })
+   return userRef.set(data, { merge: true })
   }
 
   isUserAdmin(userUid){

@@ -21,8 +21,21 @@
         <li class="nav-item" *ngIf="isLogged">
           <a class="nav-link" routerLink="/user/profile">Perfil</a>
         </li>
+        <td *ngIf="isAdmin == true"> 
+        <li class="nav-item" *ngIf="isLogged">
+          <a class="nav-link" routerLink="/datopersona">Personas</a>
+        </li>
+        </td>
         <li class="nav-item" *ngIf="isLogged">
           <a class="nav-link" routerLink="/admin/list-books">Formulario</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="isLogged">
+        <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" routerLink="/novedades">Novedades</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="/novedades" > OFICIALES</a>
+              <a class="dropdown-item" href="/novedades" > SUBOFICIALES</a>
+              <a class="dropdown-item" href="/novedades" > SSVV</a>
+            </div>
         </li>
         <li class="nav-item" *ngIf="!isLogged">
           <a class="nav-link" routerLink="/user/login">Login

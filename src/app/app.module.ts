@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 //import { FormularioComponent } from './components/admin/formulario/formulario.component';
 import { LoginComponent } from './components/users/login/login.component';
-import { ProfileComponent } from './components/users/profile/profile.component';
+// import { ProfileComponent } from './components/users/profile/profile.component';
 import { RegisterComponent } from './components/users/register/register.component';
 import { Page404Component } from './components/page404/page404.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -22,7 +22,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataApiService } from './services/data-api.service';
-
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NovedadesComponent } from './components/novedades/novedades.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
 
 
 @NgModule({
@@ -30,14 +33,19 @@ import { DataApiService } from './services/data-api.service';
     AppComponent,
     //FormularioComponent,
     LoginComponent,
-    ProfileComponent,
+    //ProfileComponent,
     RegisterComponent,
     Page404Component,
     NavbarComponent,
     HeroComponent,
     HomeComponent,
     OffersComponent,
-    ListBooksComponent
+    ListBooksComponent,
+    routingComponents,
+   NovedadesComponent
+   
+   
+    
   ],
   imports: [
     BrowserModule,
@@ -46,7 +54,10 @@ import { DataApiService } from './services/data-api.service';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFirestoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MaterialModule
+    
 
   ],
   providers: [AngularFireAuth, AngularFirestore,DataApiService], 

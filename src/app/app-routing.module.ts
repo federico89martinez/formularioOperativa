@@ -7,6 +7,8 @@ import { RegisterComponent } from './components/users/register/register.componen
 import { ProfileComponent } from './components/users/profile/profile.component';
 import { Page404Component } from './components/page404/page404.component';
 import { ListBooksComponent } from './components/admin/list-books/list-books.component';
+import { DatopersonaComponent } from './components/datopersona/datopersona.component';
+import { NovedadesComponent } from './components/novedades/novedades.component';
 import { AuthGuard } from './guards/auth.guard';
 
 
@@ -19,7 +21,10 @@ const routes: Routes = [   //rutas para direccionar la pagina
   { path: 'user/login', component: LoginComponent},
   { path: 'user/register', component: RegisterComponent},
   { path: 'user/profile', component: ProfileComponent},
+  { path: 'datopersona', component: DatopersonaComponent },
+  { path: 'novedades', component: NovedadesComponent }, 
   { path: '**', component: Page404Component}
+  
   
 ];
 
@@ -28,3 +33,4 @@ const routes: Routes = [   //rutas para direccionar la pagina
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+export const routingComponents = [DatopersonaComponent,ProfileComponent]

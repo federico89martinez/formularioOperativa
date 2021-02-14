@@ -14,6 +14,7 @@ import { NgModule } from '@angular/core';
 
 
 
+
 @Component({
   selector: 'app-list-books',
   templateUrl: './list-books.component.html',
@@ -25,7 +26,11 @@ export class ListBooksComponent implements OnInit {
     id: '',
     email: '',
     name: '',
-    message: ''
+    message: '',
+    grado: '',
+    presente: '',
+    ausente: '',
+    nro: ''
    
     };
 
@@ -33,44 +38,74 @@ export class ListBooksComponent implements OnInit {
 
   editState: boolean = false;
   formToEdit: MessageI;
-    
+  
   
    
   emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   createFormGroup() {
+    
     return new FormGroup({
       email: new FormControl('',[Validators.required,Validators.pattern(this.emailPattern)]),
       name: new FormControl('',[Validators.required,Validators.minLength(5)]),
-      message: new FormControl('')
+      //message: new FormControl(''),
+      nro: new FormControl('',[Validators.required,Validators.minLength(1)]),
+      grado: new FormControl('',[Validators.required,Validators.minLength(2)])
+     // presente: new FormControl('')
+      //ausente: new FormControl('',[Validators.required,Validators.minLength(2)]),
       // [Validators.required,Validators.minLength(10),Validators.maxLength(100)]
     });
   }
-
+ 
   contactForm: FormGroup;
-
+  nombre: string;
   constructor(private dataApi: DataApiService, private authService: AuthService) {
-
   this.contactForm = this.createFormGroup();
+  console.log(this.contactForm.value.grado)
 }
   public isAdmin: any = null;
   public userUid: string = null;
+  public respuesta: any = 0;
+  public respuesta2: any;
+  public respuesta3: any;
+  
 
   ngOnInit() {
-    this.getCurrentUser();
+    //this.getCurrentUser();
 
-    this.dataApi.getContacts().subscribe( contacts => {
+   /* this.dataApi.getContacts().subscribe( contacts => {
       this.contacts = contacts;
-    })
+    }*/
+   
   }
 
   onResetForm(){
     this.contactForm.reset();
   }
   
+  gradopre: string;
+
   onSaveForm(myForm:NgForm){
     if(this.contactForm.valid){
-      this.dataApi.saveMessage(this.contactForm.value);
+      
+      if(this.respuesta2==1){
+        this.respuesta = 'X';
+        this.contactForm.value.presente = this.respuesta;
+      }
+      if(this.respuesta3==1){
+        this.respuesta = 'X'
+        this.contactForm.value.ausente = this.respuesta;
+      }
+      
+      this.gradopre = this.contactForm.value.grado;
+      this.dataApi.clasificarColeccion(this.gradopre)
+      if(this.gradopre == "Cap"){
+        this.dataApi.saveMessage(this.contactForm.value);
+      }
+      if(this.gradopre == 'Sub'){
+        this.dataApi.saveMessage(this.contactForm.value);
+      }
+      
       this.onResetForm();
       console.log('valido');
 
@@ -102,15 +137,20 @@ export class ListBooksComponent implements OnInit {
 
 
   enviarFormulario(){
-    alert('El formulario se envio correctamente')
+    alert('El formulario se envio correctamente');
+
 
   }
 
 
   get name() { return this.contactForm.get('name');}
-    get email() { return this.contactForm.get('email');}
-    get message() { return this.contactForm.get('message');}
-
+  get email() { return this.contactForm.get('email');}
+  //get message() { return this.contactForm.get('message');}
+  get grado() { return this.contactForm.get('grado');}
+  get nro() { return this.contactForm.get('nro');}
+  //get presente() { return this.contactForm.get('presente');}
+  //get ausente() { return this.contactForm.get('ausente');}
+  
 
     editForm(event, contact:MessageI){
         this.editState = true;
@@ -134,6 +174,12 @@ export class ListBooksComponent implements OnInit {
       this.formToEdit = null;
     }
 
+
+    elejirPresencia(respuesta2){
+      console.log(respuesta2)
+      this.respuesta = respuesta2;
+      console.log(this.respuesta)
+    }
     
 
 }

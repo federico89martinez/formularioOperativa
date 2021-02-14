@@ -3,7 +3,10 @@ export interface MessageI {
     email?: string;
     name?: string;
     message?: string;
-    
+    grado?: string;
+    presente?: string;
+    ausente?: string;
+    nro?: string;
     
     
 }

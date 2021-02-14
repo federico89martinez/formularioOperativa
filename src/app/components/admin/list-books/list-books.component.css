@@ -1,6 +1,6 @@
 .form-container{
     font: 95% Arial, Helvetica, sans-serif;
-    max-width:  500px;
+    max-width:  1000px;
     padding: 16px;
     margin: 10px auto;
     background: #f7f7f7;
@@ -84,3 +84,12 @@
   .secondary-content {
       color: #000;
   }
+
+  
+  .mat-radio-inner-circle{
+      background-color: #43d1af;
+  }
+  .mat-radio-group{
+      margin-left:60px;
+  }
+

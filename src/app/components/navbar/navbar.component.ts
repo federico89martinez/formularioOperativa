@@ -14,6 +14,8 @@ export class NavbarComponent implements OnInit {
 
   public app_name: string = 'Inicio';
   public isLogged: boolean = false; //con esto visilibizamos funcionalidad
+  public isAdmin: any = null;
+  public userUid: string = null;
 
   getCurrentUser(){
     this.authService.isAuth().subscribe( auth => {
@@ -26,9 +28,21 @@ export class NavbarComponent implements OnInit {
       }
     })
   }
+
+  getCurrentUser2(){
+    this.authService.isAuth().subscribe(auth => {
+      if (auth){
+        this.userUid = auth.uid;
+        this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
+          this.isAdmin = Object.assign({} , userRole.roles).hasOwnProperty('admin');
+        })
+      }
+    })
+  }
   
   ngOnInit() {
     this.getCurrentUser();
+    this.getCurrentUser2();
   }
 
   onLogout(){
