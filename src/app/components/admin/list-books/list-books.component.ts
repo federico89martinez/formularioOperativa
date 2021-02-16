@@ -50,7 +50,8 @@ export class ListBooksComponent implements OnInit {
       name: new FormControl('',[Validators.required,Validators.minLength(5)]),
       //message: new FormControl(''),
       nro: new FormControl('',[Validators.required,Validators.minLength(1)]),
-      grado: new FormControl('',[Validators.required,Validators.minLength(2)])
+      grado: new FormControl('',[Validators.required,Validators.minLength(2)]),
+      causa: new FormControl('')
      // presente: new FormControl('')
       //ausente: new FormControl('',[Validators.required,Validators.minLength(2)]),
       // [Validators.required,Validators.minLength(10),Validators.maxLength(100)]
@@ -105,6 +106,9 @@ export class ListBooksComponent implements OnInit {
       if(this.gradopre == 'Sub'){
         this.dataApi.saveMessage(this.contactForm.value);
       }
+      if(this.gradopre == 'SSVV'){
+        this.dataApi.saveMessage(this.contactForm.value);
+      }
       
       this.onResetForm();
       console.log('valido');
@@ -148,6 +152,7 @@ export class ListBooksComponent implements OnInit {
   //get message() { return this.contactForm.get('message');}
   get grado() { return this.contactForm.get('grado');}
   get nro() { return this.contactForm.get('nro');}
+  get causa() { return this.contactForm.get('causa');}
   //get presente() { return this.contactForm.get('presente');}
   //get ausente() { return this.contactForm.get('ausente');}
   

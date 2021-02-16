@@ -23,4 +23,8 @@ export class RegisterComponent implements OnInit {
     }).catch( err => console.log('err',err.message));
   }
 
+  onUpload(e){
+    console.log('subir',e);
+  }
+
 }

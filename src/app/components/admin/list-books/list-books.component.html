@@ -160,7 +160,8 @@
           </mat-radio-group>
           
         </div>
-    
+
+       
 
                         
 
@@ -198,6 +199,18 @@
                                         El mensaje debe contener al menos 10 caracteres
                                 </div> 
                         </div> -->
+
+                        <div *ngIf="respuesta3 == 1">
+                                <input  [(ngModel)]="contact.causa"   type="text" formControlName="causa" name = "causa" id="causa" placeholder="causa">
+                                <div class="alert-danger" *ngIf="causa.invalid && (name.dirty || name.touched)">
+                                        <div class="container-error-message" *ngIf="causa.errors.required">
+                                               La causa es requerida
+                                        </div>
+                                         <div class="container-error-message" *ngIf="causa.errors.minlength">
+                                                La Causa debe tener como minimo 5 caracteres
+                                        </div> 
+                                </div>
+                        </div>
                         
                         <input [(ngModel)]="contact.email" type="text" formControlName="email" id="email" name="email" placeholder="email">
                         <div class="alert-danger" *ngIf="email.invalid && (name.dirty || name.touched)">

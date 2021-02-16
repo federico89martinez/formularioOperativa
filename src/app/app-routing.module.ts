@@ -9,6 +9,8 @@ import { Page404Component } from './components/page404/page404.component';
 import { ListBooksComponent } from './components/admin/list-books/list-books.component';
 import { DatopersonaComponent } from './components/datopersona/datopersona.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
+import { NovsubofiComponent } from './components/novsubofi/novsubofi.component';
+import { NovssvvComponent } from './components/novssvv/novssvv.component';
 import { AuthGuard } from './guards/auth.guard';
 
 
@@ -23,6 +25,8 @@ const routes: Routes = [   //rutas para direccionar la pagina
   { path: 'user/profile', component: ProfileComponent},
   { path: 'datopersona', component: DatopersonaComponent },
   { path: 'novedades', component: NovedadesComponent }, 
+  { path: 'novsubofi', component: NovsubofiComponent}, 
+  { path: 'novssvv', component: NovssvvComponent},
   { path: '**', component: Page404Component}
   
   

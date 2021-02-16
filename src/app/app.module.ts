@@ -26,6 +26,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NovedadesComponent } from './components/novedades/novedades.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { NovsubofiComponent } from './components/novsubofi/novsubofi.component';
+import { NovssvvComponent } from './components/novssvv/novssvv.component';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import { MaterialModule } from './material/material.module';
     OffersComponent,
     ListBooksComponent,
     routingComponents,
-   NovedadesComponent
+   NovedadesComponent,
+   NovsubofiComponent,
+   NovssvvComponent
    
    
     

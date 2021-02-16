@@ -1,0 +1,63 @@
+<p>novedades works!</p>
+<p>novedades works!</p>
+
+<h1> PARTE DE NOVEDADES DEL ESC COM BL 1 - FECHA: {{ date | date}}  </h1>
+     
+<br>
+<br>
+
+<h3> SSVV: </h3>
+      <div class="mat-elevation-z8" >
+      <h5>FE: {{ cantTotalSSVV }} </h5>  <h5>P: {{ cantTotalSSVVPresentes }}</h5>    <h5>A: {{ cantTotalSSVVAusentes }}</h5>
+      
+    
+      <table mat-table [dataSource]="dataSource" matSort>
+       
+        
+        <ng-container matColumnDef="nro">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header > Nro </th>
+          <td mat-cell *matCellDef="let element "> {{element.nro}} </td>     
+        </ng-container>
+
+       
+        <ng-container matColumnDef="grado">
+          <th mat-header-cell *matHeaderCellDef> Grado </th>
+          <td mat-cell *matCellDef="let element"> {{element.grado}} </td>
+        </ng-container>
+    
+       
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef > Apellido y Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+    
+        
+        <ng-container matColumnDef="presente">
+          <th mat-header-cell *matHeaderCellDef> Presente </th>
+          <td mat-cell *matCellDef="let element"> {{element.presente}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ausente">
+          <th mat-header-cell *matHeaderCellDef> Ausente </th>
+          <td mat-cell *matCellDef="let element"> {{element.ausente}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="causa">
+          <th mat-header-cell *matHeaderCellDef> Causa </th>
+          <td mat-cell *matCellDef="let element"> {{element.causa}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+
+      </table>
+       
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+  

@@ -49,6 +49,16 @@ export class DataApiService {
       }))
     );
     }
+    if(clasif=="SSVV"){
+      this.contactCollection = this.afs.collection<MessageI>('contactsSSVV');
+    this.contacts = this.contactCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as MessageI;
+        const id = a.payload.doc.id;
+        return { id, ...data};
+      }))
+    );
+    }
 
     }
 
@@ -59,6 +69,10 @@ export class DataApiService {
   getContacts(){
     //return this.contacts;
     return  this.afs.collection("contacts").snapshotChanges();
+  }
+
+  getContactsSSVV(){
+    return this.afs.collection("contactsSSVV").snapshotChanges();
   }
 
   //metodos para traer formularios?

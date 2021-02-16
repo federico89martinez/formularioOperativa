@@ -16,7 +16,7 @@ import { MatFormField } from  '@angular/material';
   styleUrls: ['./novedades.component.css']
 })
 export class NovedadesComponent implements OnInit {
-  displayedColumns: string[] = ['nro', 'grado', 'name', 'presente','ausente','message', 'email'];
+  displayedColumns: string[] = ['nro', 'grado', 'name', 'presente','ausente','causa', 'email'];
   dataSource = new MatTableDataSource();
   dataSource2 = new MatTableDataSource();
   
@@ -87,7 +87,7 @@ export class NovedadesComponent implements OnInit {
          name: e.payload.doc.data().name, 
          presente: e.payload.doc.data().presente,
          ausente: e.payload.doc.data().ausente,
-         message: e.payload.doc.data().message,
+         causa: e.payload.doc.data().causa,
          email: e.payload.doc.data().email
          
         }
@@ -104,7 +104,7 @@ export class NovedadesComponent implements OnInit {
 
 
 
-    this.dataAs.getContactsSub().subscribe(resp => {
+    /*this.dataAs.getContactsSub().subscribe(resp => {
       this.dataSource2.data = resp.map((e:any) => {
         return {
             nro: e.payload.doc.data().nro,
@@ -122,7 +122,7 @@ export class NovedadesComponent implements OnInit {
     },
     error => {
       console.error(error)
-    });
+    });*/
    
 
 
@@ -148,7 +148,7 @@ OFICIALES
 
     this.dataSource.data.forEach(element => {
       this.pregunta = Object.values(element)[3]
-      if(this.pregunta == "si"){
+      if(this.pregunta == "X"){
         this.contadorPresentes = this.contadorPresentes + 1
       }
     })
@@ -160,7 +160,7 @@ OFICIALES
 
     this.dataSource.data.forEach(element => {
       this.pregunta = Object.values(element)[4]
-      if(this.pregunta == "si"){
+      if(this.pregunta == "X"){
         this.contadorAusentes = this.contadorAusentes + 1
       }
     })
@@ -171,7 +171,7 @@ OFICIALES
   /*
   SUBOFICIALES
   */
-  cantTotalSubb(){
+  /*cantTotalSubb(){
     this.cantTotalSub = this.dataSource2.data.length   
   }
 
@@ -194,7 +194,7 @@ OFICIALES
     })
     this.cantTotalSubAusentes = this.contadorSubAusentes;
 
-  }
+  }*/
 
 
 }
