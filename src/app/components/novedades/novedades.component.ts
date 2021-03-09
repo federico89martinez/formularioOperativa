@@ -7,6 +7,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import {NgbPaginationConfig} from '@ng-bootstrap/ng-bootstrap'; 
 import { MatSort } from '@angular/material/sort';
 import { MatFormField } from  '@angular/material';
+import { AuthService } from '../../services/auth.service';
+import { UserInterface } from '../../models/user';
+import { withLatestFrom } from 'rxjs/operators';
 
 
 
@@ -16,7 +19,7 @@ import { MatFormField } from  '@angular/material';
   styleUrls: ['./novedades.component.css']
 })
 export class NovedadesComponent implements OnInit {
-  displayedColumns: string[] = ['nro', 'grado', 'name', 'presente','ausente','causa', 'email'];
+  displayedColumns: string[] = ['nro', 'grado', 'name', 'seccion', 'presente','ausente','causa', 'email'];
   dataSource = new MatTableDataSource();
   dataSource2 = new MatTableDataSource();
   
@@ -39,6 +42,7 @@ export class NovedadesComponent implements OnInit {
   
   date : number;
   collection = { count :5, data: []}
+  email2: any;
 
   pres: string;
   totalItems: number;
@@ -59,7 +63,7 @@ export class NovedadesComponent implements OnInit {
   
   //cantTotalOficialesPresentes: number;
 
-  constructor(private dataAs :  DataApiService) {
+  constructor(private dataAs :  DataApiService, private authService: AuthService) {
   
   this.date = (new Date()).getTime();
   
@@ -73,18 +77,119 @@ export class NovedadesComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }*/
-
+  user: UserInterface ={
+    name: '',
+    email: '',
+    photoUrl: '',
+    displayName: '',
+    roles: {}
+  } ;
  
 
   ngOnInit() {
-    this.dataAs.getContacts().subscribe(resp => {
+    this.dataAs.getPersona().subscribe(resp=> {
+      this.collection.data = resp.map((e:any) => {
+        return{
+         dni: e.payload.doc.data().dni,
+         nroorden: e.payload.doc.data().nroorden,
+         grado: e.payload.doc.data().grado,
+         apellido: e.payload.doc.data().apellido,
+         nombre: e.payload.doc.data().nombre,
+         responsabilidad: e.payload.doc.data().responsabilidad,
+         password: e.payload.doc.data().password,
+         email: e.payload.doc.data().email,
+         idFirebase: e.payload.doc.id
+        }
+      })
+      
+      this.buscarResponsabilidad();
+      
+   },
+   error=>{
+     console.error(error)
+   });
+
+    this.authService.isAuth().subscribe(user => {
+      if (user) {
+       // this.user = user
+       this.user.displayName = user.displayName;
+        this.user.email = user.email;
+       this.user.photoUrl = user.photoURL;
+        console.log('USER', user);
+        }
+    })
+
+ 
+
+}
+
+   
+    novedades(){
+      console.log(this.user.displayName)
+    if(this.user.displayName == "Pl My"){
+
+      this.dataAs.getContactsPlMy().subscribe(resp => {
+        
+        this.dataSource.data = resp.map((e:any) => {
+              
+          return{
+           nro: e.payload.doc.data().nro,
+           grado: e.payload.doc.data().grado,
+           name: e.payload.doc.data().name,
+           seccion: e.payload.doc.data().seccion, 
+           presente: e.payload.doc.data().presente,
+           ausente: e.payload.doc.data().ausente,
+           causa: e.payload.doc.data().causa,
+           email: e.payload.doc.data().email
+           
+          }
+          
+        })      
+        this.cantTotalOficiales();
+        this.cantTotalOficialesPresentes();
+        this.cantTotalOficialesAusentes();
+     },
+     error=>{
+       console.error(error)
+     });
+    }  else if (this.user.displayName == "Sec Cdo Ser"){
+  
+        this.dataAs.getContactsSecCdoSer().subscribe(resp => {
+          
+          this.dataSource.data = resp.map((e:any) => {
+                
+            return{
+             nro: e.payload.doc.data().nro,
+             grado: e.payload.doc.data().grado,
+             name: e.payload.doc.data().name,
+             seccion: e.payload.doc.data().seccion, 
+             presente: e.payload.doc.data().presente,
+             ausente: e.payload.doc.data().ausente,
+             causa: e.payload.doc.data().causa,
+             email: e.payload.doc.data().email
+             
+            }
+            
+          })      
+          this.cantTotalOficiales();
+          this.cantTotalOficialesPresentes();
+          this.cantTotalOficialesAusentes();
+       },
+       error=>{
+         console.error(error)
+       });
+    
+  } else if (this.user.displayName == "CCPr"){
+  
+    this.dataAs.getContactsSecCdoSer().subscribe(resp => {
       
       this.dataSource.data = resp.map((e:any) => {
             
         return{
          nro: e.payload.doc.data().nro,
          grado: e.payload.doc.data().grado,
-         name: e.payload.doc.data().name, 
+         name: e.payload.doc.data().name,
+         seccion: e.payload.doc.data().seccion, 
          presente: e.payload.doc.data().presente,
          ausente: e.payload.doc.data().ausente,
          causa: e.payload.doc.data().causa,
@@ -101,36 +206,106 @@ export class NovedadesComponent implements OnInit {
      console.error(error)
    });
 
+}  else if (this.user.displayName == "Enl Int"){
+  
+  this.dataAs.getContactsSecCdoSer().subscribe(resp => {
+    
+    this.dataSource.data = resp.map((e:any) => {
+          
+      return{
+       nro: e.payload.doc.data().nro,
+       grado: e.payload.doc.data().grado,
+       name: e.payload.doc.data().name,
+       seccion: e.payload.doc.data().seccion, 
+       presente: e.payload.doc.data().presente,
+       ausente: e.payload.doc.data().ausente,
+       causa: e.payload.doc.data().causa,
+       email: e.payload.doc.data().email
+       
+      }
+      
+    })      
+    this.cantTotalOficiales();
+    this.cantTotalOficialesPresentes();
+    this.cantTotalOficialesAusentes();
+ },
+ error=>{
+   console.error(error)
+ });
 
+} else if (this.user.displayName == "CC Secund"){
+  
+  this.dataAs.getContactsSecCdoSer().subscribe(resp => {
+    
+    this.dataSource.data = resp.map((e:any) => {
+          
+      return{
+       nro: e.payload.doc.data().nro,
+       grado: e.payload.doc.data().grado,
+       name: e.payload.doc.data().name,
+       seccion: e.payload.doc.data().seccion, 
+       presente: e.payload.doc.data().presente,
+       ausente: e.payload.doc.data().ausente,
+       causa: e.payload.doc.data().causa,
+       email: e.payload.doc.data().email
+       
+      }
+      
+    })      
+    this.cantTotalOficiales();
+    this.cantTotalOficialesPresentes();
+    this.cantTotalOficialesAusentes();
+ },
+ error=>{
+   console.error(error)
+ });
 
+} else if (this.user.displayName == "Telecom PC"){
+  
+  this.dataAs.getContactsSecCdoSer().subscribe(resp => {
+    
+    this.dataSource.data = resp.map((e:any) => {
+          
+      return{
+       nro: e.payload.doc.data().nro,
+       grado: e.payload.doc.data().grado,
+       name: e.payload.doc.data().name,
+       seccion: e.payload.doc.data().seccion, 
+       presente: e.payload.doc.data().presente,
+       ausente: e.payload.doc.data().ausente,
+       causa: e.payload.doc.data().causa,
+       email: e.payload.doc.data().email
+       
+      }
+      
+    })      
+    this.cantTotalOficiales();
+    this.cantTotalOficialesPresentes();
+    this.cantTotalOficialesAusentes();
+ },
+ error=>{
+   console.error(error)
+ });
 
-    /*this.dataAs.getContactsSub().subscribe(resp => {
-      this.dataSource2.data = resp.map((e:any) => {
-        return {
-            nro: e.payload.doc.data().nro,
-            grado: e.payload.doc.data().grado,
-            name: e.payload.doc.data().name, 
-            presente: e.payload.doc.data().presente,
-            ausente: e.payload.doc.data().ausente,
-            message: e.payload.doc.data().message,
-            email: e.payload.doc.data().email
-        }
-      })
-      this.cantTotalSubb();
-      this.cantTotalSubOficialesPresentes();
-      this.cantTotalSubOficialesAusentes();
-    },
-    error => {
-      console.error(error)
-    });*/
-   
-
-
-  }
+ }
+}
+  
   applyFilter(filterValue: string){
     this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
   }
 
+  buscarResponsabilidad(){
+    
+    this.collection.data.forEach(element => {
+      this.email2 = Object.values(element)[7];
+    if(this.user.email == this.email2){
+      this.user.displayName =  Object.values(element)[5];
+    }
+  });
+
+  this.novedades();
+  
+  }
   
 /*
 
@@ -147,7 +322,7 @@ OFICIALES
   cantTotalOficialesPresentes(){
 
     this.dataSource.data.forEach(element => {
-      this.pregunta = Object.values(element)[3]
+      this.pregunta = Object.values(element)[4]
       if(this.pregunta == "X"){
         this.contadorPresentes = this.contadorPresentes + 1
       }
@@ -159,7 +334,7 @@ OFICIALES
   cantTotalOficialesAusentes(){
 
     this.dataSource.data.forEach(element => {
-      this.pregunta = Object.values(element)[4]
+      this.pregunta = Object.values(element)[5]
       if(this.pregunta == "X"){
         this.contadorAusentes = this.contadorAusentes + 1
       }

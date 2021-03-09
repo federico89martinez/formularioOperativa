@@ -118,6 +118,16 @@
                                         El nombre debe tener como minimo 5 caracteres
                                 </div> 
                         </div>
+                       
+                        <input  [(ngModel)]="contact.seccion" disabled="true"  type="text" formControlName="seccion" name = "seccion" id="seccion" placeholder= {{user.displayName}}>
+                        <div class="alert-danger" *ngIf="seccion.invalid && (seccion.dirty || seccion.touched)">
+                                <div class="container-error-message" *ngIf="seccion.errors.required">
+                                        La seccion es requerida
+                                </div>
+                                 <div class="container-error-message" *ngIf="name.errors.minlength">
+                                        La seccion debe tener como minimo 1 caracteres
+                                </div> 
+                        </div>
                         
                                 
                 </form>

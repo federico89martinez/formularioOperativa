@@ -7,6 +7,7 @@ export interface MessageI {
     presente?: string;
     ausente?: string;
     nro?: string;
+    seccion?: string;
     
     
 }

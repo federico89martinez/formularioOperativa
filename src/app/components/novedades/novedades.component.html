@@ -79,7 +79,7 @@
         </tr> 
     </tbody>
     </table>  -->
-    <h1> PARTE DE NOVEDADES DEL ESC COM BL 1 - FECHA: {{ date | date}}  </h1>
+    <h1> PARTE DE NOVEDADES DEL ESC COM BL 1 - FECHA: {{ date | date}}</h1>
      
      <br>
      <br>
@@ -109,6 +109,11 @@
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido y Nombre </th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="seccion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Seccion que corresponde </th>
+          <td mat-cell *matCellDef="let element"> {{user.displayName}} </td>
         </ng-container>
     
         

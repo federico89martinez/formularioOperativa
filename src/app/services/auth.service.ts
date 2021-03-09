@@ -44,7 +44,10 @@ export class AuthService {
     const data: UserInterface = {
       id: user.uid,
       email: user.email,
+      photoUrl: user.photoURL,
+      displayName: user.displayName,
       roles:{
+        //admin: true
         editor: true
       }
     }
@@ -54,5 +57,4 @@ export class AuthService {
   isUserAdmin(userUid){
     return this.afs.doc<UserInterface>(`users/${userUid}`).valueChanges();
   }
-
 }

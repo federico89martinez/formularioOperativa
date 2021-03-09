@@ -1,7 +1,7 @@
 <div style="text-align: left;">
     <h2> -- </h2>
     <h2> - </h2>  
-  <h2> ABM Dato Persona </h2>
+  <h2> ABM Dato Personal </h2>
   
 
   <button type="button" class="btn btn-success" (click)="open()" data-toggle="modal" data-target="#exampleModal">Crear nueva persona</button>
@@ -74,7 +74,7 @@
                       <div class="form-group">
                         <label>Nro Orden</label> 
                         <input type="number" formControlName="nroorden">
-                    </div>
+                      </div>
                     <div class="form-group">
                       <label>Grado</label> 
                       <input type="text" formControlName="grado">
@@ -87,14 +87,36 @@
                         <label>Nombre</label> 
                         <input type="text" formControlName="nombre">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group">                    
                       <label>Responsabilidad</label> 
-                      <input type="text" formControlName="responsabilidad">
-                    </div> 
+                     
+                      <select class="form-control" id="selectedSeccion.name" formControlName="seccion" (change)="onSelect($event.target.value)">
+                        <option *ngFor="let seccion of secciones" value={{seccion.name}} >
+                            {{seccion.name}}
+                        </option>
+                        
+                      </select>
+                      <input type="hidden" formControlName="responsabilidad" [value]="secc">
+                    </div>
+                   <!-- <input #responsaUser type="text" [value]="a | async"  >  -->
+                  
+
+                  
+                      <!-- <div class="form-group">  -->
+                        
+                       <!-- </div>  -->
+                    
+                    <div class="form-group">
+                      <h5> Seleccionar Imagen:</h5>
+                      <input type="file" accept=".png, .jpg" (change)="onUpload($event)" >
+                    </div>
+                    <input #imageUser type="hidden"  [value]="urlImage | async" > 
                   </form>
               </div>
             </form>
         </div>
+          
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           <button type="button" class="btn btn-primary" (click)="guardarPersona()" (click)="onAddUser()" *ngIf="!actualizar">Guardar</button>
@@ -104,4 +126,3 @@
     </div>
   </div>
 </div>
-  

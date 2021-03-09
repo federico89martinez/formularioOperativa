@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { isNullOrUndefined } from 'util';
 import { DataApiService } from '../../services/data-api.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { finalize, takeLast, withLatestFrom } from 'rxjs/operators';
+import { observable, Observable, pipe } from 'rxjs';
+import { element } from 'protractor';
+import { SeccionI } from '../../models/model.interface';
+import { snapshotChanges } from '@angular/fire/database';
+
 
 
 @Component({
   selector: 'app-datopersona',
   templateUrl: './datopersona.component.html',
-  styleUrls: ['./datopersona.component.css']
+  styleUrls: ['./datopersona.component.css'],
+  providers: [DataApiService]
 })
 export class DatopersonaComponent implements OnInit {
 
@@ -18,22 +26,36 @@ export class DatopersonaComponent implements OnInit {
   personaForm: FormGroup;
   idFireBaseActualizar : string;
   actualizar: boolean;
+  responsabilidad: string;
 
+  public selectedSeccion : SeccionI = { id: 0, name: ''}
+  public secciones: SeccionI[];
   
   constructor(
     public fb: FormBuilder,
     private dataAs :  DataApiService,
     private router: Router, 
-    private authService: AuthService
+    private authService: AuthService,
+    private storage: AngularFireStorage
+
   ){}
   
+ @ViewChild('imageUser',{static: true}) inputImageUser: ElementRef;
+
+ @ViewChild('responsaUser',{static: true}) inputSeccionUser: ElementRef;
+ 
   
  public email: string = '';
 public password: string = '';
   closeResult = '';
 
-
+  uploadPercent: Observable<number>;
+  urlImage: Observable<string>;
+  responsabilidad2: string;
+  secc: Observable<string>;
+  //a: string;
   ngOnInit(): void {
+    this.secciones = this.dataAs.getSecciones();
     this.idFireBaseActualizar = "";
     this.actualizar= false;
     //this.getCurrentUser2();
@@ -42,7 +64,6 @@ public password: string = '';
       currentPage: 1,
       totalItems: this.collection.count
     }
-
     this.personaForm = this.fb.group({
       dni: ['', Validators.required],
       nroorden: ['', Validators.required],
@@ -77,6 +98,8 @@ public password: string = '';
 
   
 }
+
+
 pageChanged(event){
   this.config.currentPage = event;
 }
@@ -87,6 +110,7 @@ eliminar (item:any):void{
 
 
 guardarPersona():void {
+  this.personaForm.value.responsabilidad = this.secc;
   this.dataAs.createPersona(this.personaForm.value).then(resp=> {
   this.personaForm.reset();
   this.router.navigate(['/datopersona']); 
@@ -94,7 +118,6 @@ guardarPersona():void {
     console.error(error);
   })
   //this.collection.data.push(this.personaForm.value);
- 
   //this.modalService.dismissAll();
 }
 
@@ -122,7 +145,7 @@ open(){
 actualizarPersona():void{
   if(!isNullOrUndefined(this.idFireBaseActualizar)){
 
-  /*this.dataAs.updatePersona(this.idFireBaseActualizar,this.personaForm.value).then(resp => {
+ /* this.dataAs.updatePersona(this.idFireBaseActualizar,this.personaForm.value).then(resp => {
       this.personaForm.reset();
   }).catch(error => {
     console.error(error);
@@ -133,6 +156,7 @@ actualizarPersona():void{
 public isAdmin: any = null;
   public userUid: string = null;
   public userUid2: string = null;
+  private imagen: any;
 
 getCurrentUser2(){
   this.authService.isAuth().subscribe(auth => {
@@ -154,9 +178,39 @@ onAddUser(){
   this.authService.registerUser(this.email,this.password)
   
   .then(res=> {  //res
-    this.router.navigate(['/datopersona']);
+    this.authService.isAuth().subscribe( user => {
+      if (user){
+        user.updateProfile({
+          photoURL: this.inputImageUser.nativeElement.value,    
+
+        }).then ( () => {
+           this.router.navigate(['/datopersona']);
+        }).catch((error) => console.log('error',error));
+        }
+    });
+   
     
   }).catch( err => console.log('err',err.message));
 }
+
+
+onUpload(event){
+  const id = Math.random().toString(36).substring(2);
+  const file = event.target.files[0];
+  const filePath = `uploads/profile_${id}`;
+  const ref = this.storage.ref(filePath);
+  const task = this.storage.upload(filePath, file);
+  this.uploadPercent = task.percentageChanges();  // porcentaje de carga del file
+  task.snapshotChanges().pipe( finalize(() => this.urlImage = ref.getDownloadURL()  )).subscribe();
+
+}
+
+responsaUpload(event){
+}
+
+onSelect(id:any):void{
+  this.secc = id;
+}
+
 
 }

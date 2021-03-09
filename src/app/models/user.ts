@@ -8,8 +8,9 @@ export interface UserInterface {
     name?: string;
     email?: string;
     password?: string;
-
+    photoUrl: string;
     roles: Roles;
+    displayName?: any;
 
 
 }

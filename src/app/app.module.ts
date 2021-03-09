@@ -28,6 +28,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { NovsubofiComponent } from './components/novsubofi/novsubofi.component';
 import { NovssvvComponent } from './components/novssvv/novssvv.component';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { DatopersonaComponent } from './components/datopersona/datopersona.component'
+
 
 
 @NgModule({
@@ -46,7 +49,8 @@ import { NovssvvComponent } from './components/novssvv/novssvv.component';
     routingComponents,
    NovedadesComponent,
    NovsubofiComponent,
-   NovssvvComponent
+   NovssvvComponent,
+   DatopersonaComponent
    
    
     
@@ -60,7 +64,8 @@ import { NovssvvComponent } from './components/novssvv/novssvv.component';
     AngularFirestoreModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    AngularFireStorageModule
     
 
   ],

@@ -9,6 +9,7 @@ import { MessageI } from 'src/app/models/message.interface';
 //import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { NgForm } from '@angular/forms';
 import { NgModule } from '@angular/core';
+
 //import { FormsModule } from '@angular/forms'
 
 
@@ -21,7 +22,7 @@ import { NgModule } from '@angular/core';
   styleUrls: ['./list-books.component.css']
 })
 export class ListBooksComponent implements OnInit {
-   
+
   contact: MessageI = {
     id: '',
     email: '',
@@ -30,16 +31,30 @@ export class ListBooksComponent implements OnInit {
     grado: '',
     presente: '',
     ausente: '',
-    nro: ''
+    nro: '',
+    seccion:''
    
     };
 
-  contacts: MessageI [];
+    user: UserInterface ={
+      name: '',
+      email: '',
+      photoUrl: '',
+      displayName: '',
+      roles: {}
+    } ;
 
+  contacts: MessageI [];
+  collection = { count :10, data: []}
   editState: boolean = false;
   formToEdit: MessageI;
+  seccion2: String;
+  email2: any;
+
   
-  
+
+
+
    
   emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -48,7 +63,7 @@ export class ListBooksComponent implements OnInit {
     return new FormGroup({
       email: new FormControl('',[Validators.required,Validators.pattern(this.emailPattern)]),
       name: new FormControl('',[Validators.required,Validators.minLength(5)]),
-      //message: new FormControl(''),
+      seccion: new FormControl(''),
       nro: new FormControl('',[Validators.required,Validators.minLength(1)]),
       grado: new FormControl('',[Validators.required,Validators.minLength(2)]),
       causa: new FormControl('')
@@ -69,22 +84,59 @@ export class ListBooksComponent implements OnInit {
   public respuesta: any = 0;
   public respuesta2: any;
   public respuesta3: any;
+
+  ngOnInit(){
+    this.dataApi.getPersona().subscribe(resp=> {
+      this.collection.data = resp.map((e:any) => {
+        return{
+         dni: e.payload.doc.data().dni,
+         nroorden: e.payload.doc.data().nroorden,
+         grado: e.payload.doc.data().grado,
+         apellido: e.payload.doc.data().apellido,
+         nombre: e.payload.doc.data().nombre,
+         responsabilidad: e.payload.doc.data().responsabilidad,
+         password: e.payload.doc.data().password,
+         email: e.payload.doc.data().email,
+         idFirebase: e.payload.doc.id
+        }
+      })
+      
+      this.buscarResponsabilidad();
+   },
+   error=>{
+     console.error(error)
+   });
   
-
-  ngOnInit() {
-    //this.getCurrentUser();
-
-   /* this.dataApi.getContacts().subscribe( contacts => {
-      this.contacts = contacts;
-    }*/
-   
+   this.authService.isAuth().subscribe(user => {
+    if (user) {
+     // this.user = user
+     this.user.displayName = user.displayName;
+      this.user.email = user.email;
+     this.user.photoUrl = user.photoURL;
+      console.log('USER', user);
+      }
+  })
+  }
+  
+  buscarResponsabilidad(){
+      
+    this.collection.data.forEach(element => {
+      this.email2 = Object.values(element)[7];
+    if(this.user.email == this.email2){
+  
+      this.user.displayName =  Object.values(element)[5];
+    }
+  });
+  
   }
 
   onResetForm(){
     this.contactForm.reset();
   }
+
   
   gradopre: string;
+  seccionpre: string;
 
   onSaveForm(myForm:NgForm){
     if(this.contactForm.valid){
@@ -97,18 +149,18 @@ export class ListBooksComponent implements OnInit {
         this.respuesta = 'X'
         this.contactForm.value.ausente = this.respuesta;
       }
-      
-      this.gradopre = this.contactForm.value.grado;
-      this.dataApi.clasificarColeccion(this.gradopre)
-      if(this.gradopre == "Cap"){
+      //this.seccionpre = this.contactForm.value.seccion;
+      this.seccionpre = this.user.displayName;
+      this.dataApi.clasificarColeccion(this.seccionpre)
+     // if(this.seccionpre == 'Pl My'){
+        this.dataApi.saveMessage(this.contactForm.value);
+     // }
+    /*  if(this.seccionpre == 'Sub'){
         this.dataApi.saveMessage(this.contactForm.value);
       }
-      if(this.gradopre == 'Sub'){
+      if(this.seccionpre == 'SSVV'){
         this.dataApi.saveMessage(this.contactForm.value);
-      }
-      if(this.gradopre == 'SSVV'){
-        this.dataApi.saveMessage(this.contactForm.value);
-      }
+      }*/
       
       this.onResetForm();
       console.log('valido');
@@ -153,6 +205,7 @@ export class ListBooksComponent implements OnInit {
   get grado() { return this.contactForm.get('grado');}
   get nro() { return this.contactForm.get('nro');}
   get causa() { return this.contactForm.get('causa');}
+  get seccion() { return this.contactForm.get('seccion');}
   //get presente() { return this.contactForm.get('presente');}
   //get ausente() { return this.contactForm.get('ausente');}
   
