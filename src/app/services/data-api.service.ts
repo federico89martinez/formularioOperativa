@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { MessageI } from '../models/message.interface';
 import { PersonaI } from '../models/persona';
 import { map } from 'rxjs/operators';
-import { SeccionI } from '../models/model.interface';
+import { CausaI, GradoI, SeccionI } from '../models/model.interface';
 
 
 @Injectable({
@@ -41,13 +41,185 @@ export class DataApiService {
     },
     {
       id:6,
-      name: 'Telecom Pc'
+      name: 'Telecom PC'
+    }
+  ]
+
+  private grados : GradoI[] = [
+    {
+      id:1,
+      name: 'CR'
+    },
+    {
+      id:2,
+      name: 'TC'
+    },
+    {
+      id:3,
+      name: 'MY'
+    },
+    {
+      id:4,
+      name: 'CT'
+    },
+    {
+      id:5,
+      name: 'TP'
+    },
+    {
+      id:6,
+      name: 'TT'
+    },
+    {
+      id:7,
+      name: 'ST'
+    },
+    {
+      id:8,
+      name: 'SM'
+    },
+    {
+      id:9,
+      name: 'SP'
+    },
+    {
+      id:10,
+      name: 'SA'
+    },
+    {
+      id:11,
+      name: 'SI'
+    },
+    {
+      id:12,
+      name: 'SG'
+    },
+    {
+      id:13,
+      name: 'CI'
+    },
+    {
+      id:14,
+      name: 'CB'
+    },
+    {
+      id:15,
+      name: 'CB Art 11'
+    },
+    {
+      id:16,
+      name: 'VP'
+    },
+    {
+      id:17,
+      name: 'VS'
+    },
+    {
+      id:18,
+      name: 'VS "EC"'
+    },
+    {
+      id:19,
+      name: 'AC'
+    }
+  ]
+
+  private causas : CausaI[] = [
+    {
+      id:1,
+      name: 'Autorizado'
+    },
+    {
+      id:2,
+      name: 'Parte de Enfermo'
+    },
+    {
+      id:3,
+      name: 'Licencia Especial'
+    },
+    {
+      id:4,
+      name: 'Licencia por Maternidad'
+    },
+    {
+      id:5,
+      name: 'Licencia por Retiro'
+    },
+    {
+      id:6,
+      name: 'Guardia Entrante'
+    },
+    {
+      id:7,
+      name: 'Guardia Saliente'
+    },
+    {
+      id:8,
+      name: 'FEI Entrante'
+    },
+    {
+      id:9,
+      name: 'FEI Saliente'
+    },
+    {
+      id:10,
+      name: 'Comisión Cas Of'
+    },
+    {
+      id:11,
+      name: 'Comisión Cas Subof'
+    },
+    {
+      id:12,
+      name: 'Comisión Rancho de Tropas'
+    },
+    {
+      id:13,
+      name: 'Comisión Casa 17'
+    },
+    {
+      id:14,
+      name: 'Comisión Hípica'
+    },
+    {
+      id:15,
+      name: 'Comisión Cdo Br Bl I'
+    },
+    {
+      id:16,
+      name: 'Comisión BAL Tandil'
+    },
+    {
+      id:17,
+      name: 'Comisión Ca San 1'
+    },
+    {
+      id:18,
+      name: 'Comisión Exterior'
+    },
+    {
+      id:19,
+      name: 'Comisión Panadería'
+    },
+    {
+      id:20,
+      name: 'Otra'
     }
   ]
 
   getSecciones(): SeccionI[]{
     return this.secciones;
   }
+
+  getGrados(): GradoI[]{
+    return this.grados;
+  }
+
+  getCausas(): CausaI[]{
+    return this.causas;
+  }
+
+
 
   constructor(public afs: AngularFirestore) {  }
     //return this.afs.collection("contacts").valueChanges.length;
@@ -106,8 +278,8 @@ export class DataApiService {
       }))
     );
     }
-    if(clasif=="Telecom Pc"){
-      this.contactCollection = this.afs.collection<MessageI>('TelecomPc');
+    if(clasif=="Telecom PC"){
+      this.contactCollection = this.afs.collection<MessageI>('TelecomPC');
     this.contacts = this.contactCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as MessageI;
@@ -129,6 +301,21 @@ export class DataApiService {
     return this.afs.collection("SecCdoSer").snapshotChanges();
   }
 
+  getContactsCCPr(){
+    return this.afs.collection("CCPr").snapshotChanges();
+  }
+
+  getContactsEnlInt(){
+    return this.afs.collection("EnlInt").snapshotChanges();
+  }
+
+  getContactsCCSecund(){
+    return this.afs.collection("CCSecund").snapshotChanges();
+  }
+
+  getContactsTelecomPC(){
+    return this.afs.collection("TelecomPC").snapshotChanges();
+  }
 
   getContactsSub(){
     return this.afs.collection("contactsSub").snapshotChanges();

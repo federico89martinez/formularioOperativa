@@ -8,7 +8,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize, takeLast, withLatestFrom } from 'rxjs/operators';
 import { observable, Observable, pipe } from 'rxjs';
 import { element } from 'protractor';
-import { SeccionI } from '../../models/model.interface';
+import { GradoI, SeccionI } from '../../models/model.interface';
 import { snapshotChanges } from '@angular/fire/database';
 
 
@@ -28,8 +28,11 @@ export class DatopersonaComponent implements OnInit {
   actualizar: boolean;
   responsabilidad: string;
 
-  public selectedSeccion : SeccionI = { id: 0, name: ''}
+  public selectedGrado : GradoI = { id: 0, name: ''}
+  public grados: GradoI[];
+
   public secciones: SeccionI[];
+  public selectedSeccion : SeccionI = { id: 0, name: ''}
   
   constructor(
     public fb: FormBuilder,
@@ -53,9 +56,11 @@ public password: string = '';
   urlImage: Observable<string>;
   responsabilidad2: string;
   secc: Observable<string>;
+  gradd: Observable<string>;
   //a: string;
   ngOnInit(): void {
     this.secciones = this.dataAs.getSecciones();
+    this.grados = this.dataAs.getGrados();
     this.idFireBaseActualizar = "";
     this.actualizar= false;
     //this.getCurrentUser2();
@@ -111,6 +116,7 @@ eliminar (item:any):void{
 
 guardarPersona():void {
   this.personaForm.value.responsabilidad = this.secc;
+  this.personaForm.value.grado = this.gradd;
   this.dataAs.createPersona(this.personaForm.value).then(resp=> {
   this.personaForm.reset();
   this.router.navigate(['/datopersona']); 
@@ -205,12 +211,12 @@ onUpload(event){
 
 }
 
-responsaUpload(event){
-}
-
 onSelect(id:any):void{
   this.secc = id;
 }
 
+onGradoSelect(id:any):void{
+  this.gradd = id;
+}
 
 }

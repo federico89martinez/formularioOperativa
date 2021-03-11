@@ -132,6 +132,11 @@
           <td mat-cell *matCellDef="let element"> {{element.causa}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="especificar">
+          <th mat-header-cell *matHeaderCellDef> Especificar </th>
+          <td mat-cell *matCellDef="let element"> {{element.especificar}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef> Email </th>
           <td mat-cell *matCellDef="let element"> {{element.email}} </td>

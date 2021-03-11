@@ -5,3 +5,14 @@ export interface SeccionI{
 
 
 }
+
+
+export interface GradoI{
+    id:number;
+    name:string;
+}
+
+export interface CausaI{
+    id:number;
+    name:string;
+}

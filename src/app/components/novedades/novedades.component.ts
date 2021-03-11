@@ -19,7 +19,7 @@ import { withLatestFrom } from 'rxjs/operators';
   styleUrls: ['./novedades.component.css']
 })
 export class NovedadesComponent implements OnInit {
-  displayedColumns: string[] = ['nro', 'grado', 'name', 'seccion', 'presente','ausente','causa', 'email'];
+  displayedColumns: string[] = ['nro', 'grado', 'name', 'seccion', 'presente','ausente','causa', 'especificar', 'email'];
   dataSource = new MatTableDataSource();
   dataSource2 = new MatTableDataSource();
   
@@ -140,7 +140,8 @@ export class NovedadesComponent implements OnInit {
            presente: e.payload.doc.data().presente,
            ausente: e.payload.doc.data().ausente,
            causa: e.payload.doc.data().causa,
-           email: e.payload.doc.data().email
+           email: e.payload.doc.data().email,
+           especificar: e.payload.doc.data().especificar
            
           }
           
@@ -166,7 +167,8 @@ export class NovedadesComponent implements OnInit {
              presente: e.payload.doc.data().presente,
              ausente: e.payload.doc.data().ausente,
              causa: e.payload.doc.data().causa,
-             email: e.payload.doc.data().email
+             email: e.payload.doc.data().email,
+             especificar: e.payload.doc.data().especificar
              
             }
             
@@ -181,7 +183,7 @@ export class NovedadesComponent implements OnInit {
     
   } else if (this.user.displayName == "CCPr"){
   
-    this.dataAs.getContactsSecCdoSer().subscribe(resp => {
+    this.dataAs.getContactsCCPr().subscribe(resp => {
       
       this.dataSource.data = resp.map((e:any) => {
             
@@ -193,7 +195,8 @@ export class NovedadesComponent implements OnInit {
          presente: e.payload.doc.data().presente,
          ausente: e.payload.doc.data().ausente,
          causa: e.payload.doc.data().causa,
-         email: e.payload.doc.data().email
+         email: e.payload.doc.data().email,
+         especificar: e.payload.doc.data().especificar
          
         }
         
@@ -208,7 +211,7 @@ export class NovedadesComponent implements OnInit {
 
 }  else if (this.user.displayName == "Enl Int"){
   
-  this.dataAs.getContactsSecCdoSer().subscribe(resp => {
+  this.dataAs.getContactsEnlInt().subscribe(resp => {
     
     this.dataSource.data = resp.map((e:any) => {
           
@@ -220,7 +223,8 @@ export class NovedadesComponent implements OnInit {
        presente: e.payload.doc.data().presente,
        ausente: e.payload.doc.data().ausente,
        causa: e.payload.doc.data().causa,
-       email: e.payload.doc.data().email
+       email: e.payload.doc.data().email,
+       especificar: e.payload.doc.data().especificar
        
       }
       
@@ -235,7 +239,7 @@ export class NovedadesComponent implements OnInit {
 
 } else if (this.user.displayName == "CC Secund"){
   
-  this.dataAs.getContactsSecCdoSer().subscribe(resp => {
+  this.dataAs.getContactsCCSecund().subscribe(resp => {
     
     this.dataSource.data = resp.map((e:any) => {
           
@@ -247,7 +251,8 @@ export class NovedadesComponent implements OnInit {
        presente: e.payload.doc.data().presente,
        ausente: e.payload.doc.data().ausente,
        causa: e.payload.doc.data().causa,
-       email: e.payload.doc.data().email
+       email: e.payload.doc.data().email,
+       especificar: e.payload.doc.data().especificar
        
       }
       
@@ -262,7 +267,7 @@ export class NovedadesComponent implements OnInit {
 
 } else if (this.user.displayName == "Telecom PC"){
   
-  this.dataAs.getContactsSecCdoSer().subscribe(resp => {
+  this.dataAs.getContactsTelecomPC().subscribe(resp => {
     
     this.dataSource.data = resp.map((e:any) => {
           
@@ -274,7 +279,8 @@ export class NovedadesComponent implements OnInit {
        presente: e.payload.doc.data().presente,
        ausente: e.payload.doc.data().ausente,
        causa: e.payload.doc.data().causa,
-       email: e.payload.doc.data().email
+       email: e.payload.doc.data().email,
+       especificar: e.payload.doc.data().especificar
        
       }
       

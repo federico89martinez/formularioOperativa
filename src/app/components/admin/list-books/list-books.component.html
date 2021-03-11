@@ -100,7 +100,7 @@
                                         El nro debe tener como minimo 1 caracteres
                                 </div> 
                         </div>
-                        <input  [(ngModel)]="contact.grado"   type="text" formControlName="grado" name = "grado" id="grado" placeholder="Grado">
+                        <!-- <input  [(ngModel)]="contact.grado"   type="text" formControlName="grado" name = "grado" id="grado" placeholder="Grado">
                         <div class="alert-danger" *ngIf="grado.invalid && (grado.dirty || grado.touched)">
                                 <div class="container-error-message" *ngIf="grado.errors.required">
                                         El grado es requerido
@@ -108,7 +108,20 @@
                                  <div class="container-error-message" *ngIf="grado.errors.minlength">
                                         El grado debe tener como minimo 2 caracteres
                                 </div> 
-                        </div>
+                        </div> -->
+
+                        <div class="form-group">                    
+                                <label>Grado</label> 
+                               
+                                <select class="form-control" id="selectedGrado.name" formControlName="grado" (change)="onGradoSelect($event.target.value)">
+                                  <option *ngFor="let grado of grados" value={{grado.name}} >
+                                      {{grado.name}}
+                                  </option>
+                                  
+                                </select>
+                                <input type="hidden" formControlName="grado" [value]="gradd">
+                        </div>        
+
                         <input  [(ngModel)]="contact.nombre"   type="text" formControlName="name" name = "name" id="name" placeholder="ApellidoyNombre">
                         <div class="alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
                                 <div class="container-error-message" *ngIf="name.errors.required">
@@ -119,7 +132,7 @@
                                 </div> 
                         </div>
                        
-                        <input  [(ngModel)]="contact.seccion" disabled="true"  type="text" formControlName="seccion" name = "seccion" id="seccion" placeholder= {{user.displayName}}>
+                        <input  [(ngModel)]="contact.seccion" disabled="true"  type="text" formControlName="seccion" name = "seccion" id="seccion"  placeholder= {{user.displayName}}>
                         <div class="alert-danger" *ngIf="seccion.invalid && (seccion.dirty || seccion.touched)">
                                 <div class="container-error-message" *ngIf="seccion.errors.required">
                                         La seccion es requerida
@@ -165,7 +178,6 @@
          <h4 style='margin-left:60px'>Ausente</h4>
          <mat-radio-group  [(ngModel)]="respuesta3" >
                  <mat-radio-button value="1">Si</mat-radio-button>
-                 <!-- <mat-radio-button value="2">No</mat-radio-button> -->
          
           </mat-radio-group>
           
@@ -211,7 +223,7 @@
                         </div> -->
 
                         <div *ngIf="respuesta3 == 1">
-                                <input  [(ngModel)]="contact.causa"   type="text" formControlName="causa" name = "causa" id="causa" placeholder="causa">
+                                <!-- <input  [(ngModel)]="contact.causa"   type="text" formControlName="causa" name = "causa" id="causa" placeholder="causa">
                                 <div class="alert-danger" *ngIf="causa.invalid && (name.dirty || name.touched)">
                                         <div class="container-error-message" *ngIf="causa.errors.required">
                                                La causa es requerida
@@ -219,7 +231,35 @@
                                          <div class="container-error-message" *ngIf="causa.errors.minlength">
                                                 La Causa debe tener como minimo 5 caracteres
                                         </div> 
+                                </div> -->
+                                <div class="form-group">                    
+                                        <label>Causa</label> 
+                                       
+                                        <select class="form-control" id="selectedCausao.name" formControlName="causa" (change)="onCausaSelect($event.target.value)" [(ngModel)]="especificar">
+                                          <option *ngFor="let causa of causas" value={{causa.name}} >
+                                              {{causa.name}}
+                                          </option>
+                                          
+                                        </select>
+                                        <input type="hidden" formControlName="causa" [value]="causs">
                                 </div>
+                                <div *ngIf="especificar == 'Otra'">
+                                        <div class="form-group">                    
+                                                <label>Especificar</label> 
+                                               
+                                                <input  [(ngModel)]="contact.especificar"   type="text" formControlName="especificar" name = "especificar" id="especificar" placeholder="especificar">
+                                                <div class="alert-danger" *ngIf="especificar.invalid && (especificar.dirty || especificar.touched)">
+                                                        <div class="container-error-message" *ngIf="especificar.errors.required">
+                                                               La especificacion es requerida
+                                                        </div>
+                                                         <div class="container-error-message" *ngIf="especificar.errors.minlength">
+                                                                La espesificacion debe tener al menos 2 carecteres
+                                                        </div> 
+                                                </div>
+                                        </div>
+
+                                </div>
+                                
                         </div>
                         
                         <input [(ngModel)]="contact.email" type="text" formControlName="email" id="email" name="email" placeholder="email">

@@ -9,6 +9,8 @@ import { MessageI } from 'src/app/models/message.interface';
 //import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { NgForm } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { GradoI , CausaI} from '../../../models/model.interface';
+import { observable, Observable, pipe } from 'rxjs';
 
 //import { FormsModule } from '@angular/forms'
 
@@ -32,7 +34,8 @@ export class ListBooksComponent implements OnInit {
     presente: '',
     ausente: '',
     nro: '',
-    seccion:''
+    seccion:'',
+    especificar:''
    
     };
 
@@ -51,6 +54,12 @@ export class ListBooksComponent implements OnInit {
   seccion2: String;
   email2: any;
 
+  public selectedGrado : GradoI = { id: 0, name: ''}
+  public grados: GradoI[];
+
+
+  public selectedCausa : CausaI = { id: 0, name: ''}
+  public causas: CausaI[];
   
 
 
@@ -66,7 +75,8 @@ export class ListBooksComponent implements OnInit {
       seccion: new FormControl(''),
       nro: new FormControl('',[Validators.required,Validators.minLength(1)]),
       grado: new FormControl('',[Validators.required,Validators.minLength(2)]),
-      causa: new FormControl('')
+      causa: new FormControl(''),
+      especificar: new FormControl('')
      // presente: new FormControl('')
       //ausente: new FormControl('',[Validators.required,Validators.minLength(2)]),
       // [Validators.required,Validators.minLength(10),Validators.maxLength(100)]
@@ -86,6 +96,8 @@ export class ListBooksComponent implements OnInit {
   public respuesta3: any;
 
   ngOnInit(){
+    this.grados = this.dataApi.getGrados();
+    this.causas = this.dataApi.getCausas();
     this.dataApi.getPersona().subscribe(resp=> {
       this.collection.data = resp.map((e:any) => {
         return{
@@ -137,8 +149,12 @@ export class ListBooksComponent implements OnInit {
   
   gradopre: string;
   seccionpre: string;
+  gradd: Observable<string>;
+  causs: Observable<string>;
 
   onSaveForm(myForm:NgForm){
+    this.contactForm.value.grado = this.gradd;
+    this.contactForm.value.causa = this.causs;
     if(this.contactForm.valid){
       
       if(this.respuesta2==1){
@@ -206,6 +222,7 @@ export class ListBooksComponent implements OnInit {
   get nro() { return this.contactForm.get('nro');}
   get causa() { return this.contactForm.get('causa');}
   get seccion() { return this.contactForm.get('seccion');}
+  //get especificar() { return this.contactForm.get('especificar');}
   //get presente() { return this.contactForm.get('presente');}
   //get ausente() { return this.contactForm.get('ausente');}
   
@@ -239,5 +256,12 @@ export class ListBooksComponent implements OnInit {
       console.log(this.respuesta)
     }
     
+    onGradoSelect(id:any):void{
+      this.gradd = id;
+    }
+
+    onCausaSelect(id:any):void{
+      this.causs = id;
+    }
 
 }
