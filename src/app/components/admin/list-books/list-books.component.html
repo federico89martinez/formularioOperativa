@@ -91,7 +91,8 @@
                 <h1>FORMULARIO </h1>
                 
                 <form [formGroup]="contactForm" (ngSubmit)="onSaveForm(formNew)" #formNew="ngForm">
-                        <input  [(ngModel)]="contact.nro"   type="text" formControlName="nro" name = "nro" id="nro" placeholder="Nro">
+                        <label>Nro Orden</label> 
+                        <input  [(ngModel)]="contact.nro"   type="text" formControlName="nro" name = "nro" id="nro" placeholder="NroOrden">
                         <div class="alert-danger" *ngIf="nro.invalid && (nro.dirty || nro.touched)">
                                 <div class="container-error-message" *ngIf="nro.errors.required">
                                         El nro es requerido
@@ -121,7 +122,7 @@
                                 </select>
                                 <input type="hidden" formControlName="grado" [value]="gradd">
                         </div>        
-
+                        <label>Apellido y nombre</label>         
                         <input  [(ngModel)]="contact.nombre"   type="text" formControlName="name" name = "name" id="name" placeholder="ApellidoyNombre">
                         <div class="alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
                                 <div class="container-error-message" *ngIf="name.errors.required">
@@ -131,7 +132,7 @@
                                         El nombre debe tener como minimo 5 caracteres
                                 </div> 
                         </div>
-                       
+                        <label>Seccion</label> 
                         <input  [(ngModel)]="contact.seccion" disabled="true"  type="text" formControlName="seccion" name = "seccion" id="seccion"  placeholder= {{user.displayName}}>
                         <div class="alert-danger" *ngIf="seccion.invalid && (seccion.dirty || seccion.touched)">
                                 <div class="container-error-message" *ngIf="seccion.errors.required">
@@ -261,7 +262,7 @@
                                 </div>
                                 
                         </div>
-                        
+                        <label>Contacto</label> 
                         <input [(ngModel)]="contact.email" type="text" formControlName="email" id="email" name="email" placeholder="email">
                         <div class="alert-danger" *ngIf="email.invalid && (name.dirty || name.touched)">
                                 <div class="container-error-message" *ngIf="email.errors.required">

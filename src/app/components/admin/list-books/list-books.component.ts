@@ -154,7 +154,9 @@ export class ListBooksComponent implements OnInit {
 
   onSaveForm(myForm:NgForm){
     this.contactForm.value.grado = this.gradd;
-    this.contactForm.value.causa = this.causs;
+    if(this.causs != null){
+      this.contactForm.value.causa = this.causs;
+    }
     if(this.contactForm.valid){
       
       if(this.respuesta2==1){
