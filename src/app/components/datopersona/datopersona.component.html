@@ -30,7 +30,7 @@
                 <td>{{item.password}}</td>
                 <td>{{item.email}}</td>
                 <td>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="openEditar(content,item)" >Editar</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"  >Editar</button>
                     <button type="button" class="btn btn-danger" (click)="eliminar(item)">Eliminar</button>
                 </td>
             </tr>
@@ -115,6 +115,7 @@
                       <input type="file" accept=".png, .jpg" (change)="onUpload($event)" >
                     </div>
                     <input #imageUser type="hidden"  [value]="urlImage | async" > 
+                 
                   </form>
               </div>
             </form>

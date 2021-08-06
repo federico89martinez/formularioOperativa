@@ -224,7 +224,7 @@ export class ListBooksComponent implements OnInit {
   get nro() { return this.contactForm.get('nro');}
   get causa() { return this.contactForm.get('causa');}
   get seccion() { return this.contactForm.get('seccion');}
-  //get especificar() { return this.contactForm.get('especificar');}
+  get especificar() { return this.contactForm.get('especificar');}
   //get presente() { return this.contactForm.get('presente');}
   //get ausente() { return this.contactForm.get('ausente');}
   

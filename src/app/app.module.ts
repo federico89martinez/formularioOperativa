@@ -30,6 +30,7 @@ import { NovsubofiComponent } from './components/novsubofi/novsubofi.component';
 import { NovssvvComponent } from './components/novssvv/novssvv.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { DatopersonaComponent } from './components/datopersona/datopersona.component'
+import { PersonaComponent } from './components/persona/persona.component';
 
 
 
@@ -50,7 +51,8 @@ import { DatopersonaComponent } from './components/datopersona/datopersona.compo
    NovedadesComponent,
    NovsubofiComponent,
    NovssvvComponent,
-   DatopersonaComponent
+   DatopersonaComponent,
+   PersonaComponent
    
    
     
